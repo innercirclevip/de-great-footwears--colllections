@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>De Great Footwear Collection</title>
+    <link rel="icon" type="image/png" href="./logo.png">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <script src="https://js.paystack.co/v2/inline.js"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            900: '#000000',
+                            800: '#1a1a1a',
+                            500: '#D4AF37',
+                            100: '#FAFAFA',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #888; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #555; }
+
+        .transition-all-ease { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        
+        .product-img-container { overflow: hidden; }
+        .product-img { transition: transform 0.5s ease; }
+        .group:hover .product-img { transform: scale(1.05); }
+
+        @keyframes slideInUp {
+            from { transform: translateY(100%); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        .toast-animate { animation: slideInUp 0.3s ease-out forwards; }
+    </style>
+</head>
+<body class="bg-white text-gray-900 font-sans antialiased overflow-x-hidden">
+
+    <!-- Top Banner -->
+    <div class="bg-[#f5f5f0] text-center py-2 text-xs sm:text-sm font-bold tracking-widest uppercase border-b border-gray-200 z-50 relative text-black">
+        Welcome to our store
+    </div>
+
+    <!-- Navigation Bar -->
+    <header class="fixed w-full top-0 z-40 bg-white/90 backdrop-blur-md border-b border-gray-100 shadow-sm transition-all-ease mt-8" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <div class="flex items-center sm:hidden">
+                    <button type="button" class="text-gray-500 hover:text-gray-900 focus:outline-none" onclick="toggleMobileMenu()">
+                        <i class="ph ph-list text-2xl"></i>
+                    </button>
+                </div>
+
+                <div class="flex-shrink-0 flex items-center justify-center flex-1 sm:flex-none sm:justify-start">
+                    <a href="#" class="flex items-center gap-2">
+                        <img src="./logo.png" alt="De Great Logo" class="w-12 h-12 object-contain rounded-lg">
+                        <span class="font-extrabold text-xl tracking-tight hidden sm:block">De Great Footwear</span>
+                    </a>
+                </div>
+
+                <nav class="hidden sm:flex space-x-8 items-center">
+                    <a href="#" class="text-gray-900 hover:text-brand-500 font-medium transition-colors">New Arrivals</a>
+                    <a href="#products" class="text-gray-500 hover:text-brand-500 font-medium transition-colors">Men</a>
+                    <a href="#products" class="text-gray-500 hover:text-brand-500 font-medium transition-colors">Women</a>
+                    <a href="#" class="text-gray-500 hover:text-brand-500 font-medium transition-colors">Accessories</a>
+                </nav>
+
+                <div class="flex items-center justify-end gap-2 sm:gap-4">
+                    <div id="user-nav"></div>
+                    <button class="relative p-2 text-gray-600 hover:text-gray-900 transition-colors" onclick="toggleCart()">
+                        <i class="ph ph-shopping-cart text-2xl"></i>
+                        <span id="cart-badge" class="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white transform translate-x-1/4 -translate-y-1/4 bg-brand-900 rounded-full hidden">
+                            0
+                        </span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <div id="mobile-menu" class="hidden sm:hidden bg-white border-t border-gray-100">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                <a href="#" class="block px-3 py-2 rounded-md text-base font-medium text-gray-900 bg-gray-50" onclick="toggleMobileMenu()">New Arrivals</a>
+                <a href="#products" class="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50" onclick="toggleMobileMenu()">Men</a>
+                <a href="#products" class="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50" onclick="toggleMobileMenu()">Women</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <main class="pt-28">
+        <div class="relative bg-black overflow-hidden flex flex-col items-center justify-center pt-16 pb-24 px-4 sm:px-6 lg:px-8 border-b-4 border-brand-500">
+            <div class="w-full max-w-2xl mx-auto text-center z-10 flex flex-col items-center">
+                <img src="./logo.png" alt="De Great Footwear Collection" class="w-full max-w-md md:max-w-lg object-contain mb-10 drop-shadow-2xl">
+                
+                <a href="#products" class="inline-flex items-center justify-center px-10 py-3 border border-brand-500 text-sm font-medium rounded-lg text-brand-500 bg-transparent hover:bg-brand-500 hover:text-black transition-colors duration-300">
+                    Shop All
+                </a>
+            </div>
+        </div>
+
+        <!-- Featured Products Section -->
+        <div id="products" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-extrabold text-gray-900 sm:text-4xl">Featured Collection</h2>
+                <p class="mt-4 max-w-2xl text-xl text-gray-500 mx-auto">Handpicked styles just for you.</p>
+            </div>
+
+            <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-y-10 gap-x-6 xl:gap-x-8">
+                <!-- Products injected by JavaScript -->
+            </div>
+        </div>
+        
+        <!-- Benefits Section -->
+        <div class="bg-gray-50 py-16">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+                    <div class="p-6">
+                        <i class="ph ph-truck text-4xl text-brand-900 mb-4 inline-block"></i>
+                        <h3 class="text-lg font-bold text-gray-900">Free Shipping</h3>
+                        <p class="mt-2 text-gray-500">On all orders over ₦100,000.</p>
+                    </div>
+                    <div class="p-6">
+                        <i class="ph ph-arrow-counter-clockwise text-4xl text-brand-900 mb-4 inline-block"></i>
+                        <h3 class="text-lg font-bold text-gray-900">Easy Returns</h3>
+                        <p class="mt-2 text-gray-500">30-day money back guarantee.</p>
+                    </div>
+                    <div class="p-6">
+                        <i class="ph ph-headphones text-4xl text-brand-900 mb-4 inline-block"></i>
+                        <h3 class="text-lg font-bold text-gray-900">24/7 Support</h3>
+                        <p class="mt-2 text-gray-500">Real humans to help you out.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Auth Modal -->
+    <div id="auth-modal" class="fixed inset-0 bg-black/60 z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full p-8 relative">
+            <button onclick="closeAuthModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-900">
+                <i class="ph ph-x text-2xl"></i>
+            </button>
+            
+            <div id="auth-tabs" class="flex border-b border-gray-200 mb-6">
+                <button id="tab-login" onclick="switchAuthTab('login')" class="flex-1 py-3 text-center font-bold text-brand-500 border-b-2 border-brand-500 transition-all">Login</button>
+                <button id="tab-register" onclick="switchAuthTab('register')" class="flex-1 py-3 text-center font-medium text-gray-500 hover:text-gray-700 transition-all">Register</button>
+            </div>
+
+            <form id="login-form" onsubmit="handleLogin(event)">
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                    <input type="email" id="login-email" required class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-brand-500 focus:border-brand-500 outline-none" placeholder="you@example.com">
+                </div>
+                <div class="mb-6">
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+                    <input type="password" id="login-password" required class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-brand-500 focus:border-brand-500 outline-none" placeholder="••••••••">
+                </div>
+                <button type="submit" class="w-full bg-brand-900 text-brand-500 py-3 rounded-lg font-bold hover:bg-black transition-colors border border-brand-500">
+                    Login
+                </button>
+            </form>
+
+            <form id="register-form" onsubmit="handleRegister(event)" class="hidden">
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+                    <input type="text" id="register-name" required class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-brand-500 focus:border-brand-500 outline-none" placeholder="John Doe">
+                </div>
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                    <input type="email" id="register-email" required class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-brand-500 focus:border-brand-500 outline-none" placeholder="you@example.com">
+                </div>
+                <div class="mb-6">
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+                    <input type="password" id="register-password" required minlength="6" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-brand-500 focus:border-brand-500 outline-none" placeholder="At least 6 characters">
+                </div>
+                <button type="submit" class="w-full bg-brand-900 text-brand-500 py-3 rounded-lg font-bold hover:bg-black transition-colors border border-brand-500">
+                    Create Account
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Cart Overlay -->
+    <div id="cart-overlay" class="fixed inset-0 bg-black/50 z-50 hidden transition-opacity opacity-0" onclick="toggleCart()"></div>
+    
+    <!-- Cart Drawer -->
+    <div id="cart-drawer" class="fixed inset-y-0 right-0 w-full max-w-md bg-white shadow-2xl z-50 transform translate-x-full transition-transform duration-300 ease-in-out flex flex-col">
+        <div class="flex items-center justify-between p-6 border-b border-gray-100">
+            <h2 class="text-xl font-bold text-gray-900 flex items-center gap-2">
+                <i class="ph ph-shopping-bag"></i> Your Cart
+            </h2>
+            <button onclick="toggleCart()" class="text-gray-400 hover:text-gray-900 p-2">
+                <i class="ph ph-x text-2xl"></i>
+            </button>
+        </div>
+        
+        <div id="cart-items-container" class="flex-1 overflow-y-auto p-6 space-y-6">
+            <div id="empty-cart-msg" class="flex flex-col items-center justify-center h-full text-center text-gray-500">
+                <i class="ph ph-shopping-cart text-6xl mb-4 text-gray-300"></i>
+                <p class="text-lg">Your cart is currently empty.</p>
+                <button onclick="toggleCart()" class="mt-4 text-brand-500 font-medium hover:underline">Continue Shopping</button>
+            </div>
+            <div id="cart-items-list" class="space-y-6 hidden"></div>
+        </div>
+
+        <div id="cart-footer" class="border-t border-gray-100 p-6 bg-gray-50 hidden">
+            <div class="flex justify-between text-base font-bold text-gray-900 mb-4">
+                <p>Subtotal</p>
+                <p id="cart-total">₦0.00</p>
+            </div>
+            <p class="text-sm text-gray-500 mb-6">Shipping is ₦3,500. Free shipping on orders ₦100,000 and up!</p>
+            <button onclick="checkout()" class="w-full bg-brand-900 text-brand-500 px-6 py-4 rounded-md font-bold hover:bg-brand-800 transition-colors shadow-lg flex justify-center items-center gap-2 border border-brand-500">
+                Checkout <i class="ph ph-arrow-right"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div id="toast-container" class="fixed bottom-6 left-1/2 transform -translate-x-1/2 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-gray-100 pt-12 pb-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <div class="col-span-1 md:col-span-2">
+                    <a href="#" class="flex items-center gap-2 mb-4">
+                        <img src="./logo.png" alt="DG Logo" class="w-10 h-10 object-contain rounded-lg">
+                        <span class="font-extrabold text-lg tracking-tight">De Great Footwear</span>
+                    </a>
+                    <p class="text-gray-500 text-sm max-w-md">
+                        Setting the standard for premium footwear. We combine craftsmanship, style, and comfort to deliver shoes that make a statement.
+                    </p>
+                </div>
+                <div>
+                    <h4 class="font-bold text-gray-900 mb-4">Shop</h4>
+                    <ul class="space-y-2 text-sm text-gray-500">
+                        <li><a href="#" class="hover:text-brand-500">Men's Collection</a></li>
+                        <li><a href="#" class="hover:text-brand-500">Women's Collection</a></li>
+                        <li><a href="#" class="hover:text-brand-500">New Arrivals</a></li>
+                        <li><a href="#" class="hover:text-brand-500">Sales & Offers</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-gray-900 mb-4">Customer Care</h4>
+                    <ul class="space-y-2 text-sm text-gray-500">
+                        <li><a href="mailto:degreatdaniel698@gmail.com" class="hover:text-brand-500 flex items-center gap-2"><i class="ph ph-envelope-simple text-lg"></i> degreatdaniel698@gmail.com</a></li>
+                        <li><a href="tel:09016267069" class="hover:text-brand-500 flex items-center gap-2"><i class="ph ph-phone text-lg"></i> 09016267069</a></li>
+                        <li class="flex items-center gap-2"><i class="ph ph-map-pin text-lg"></i> Nigeria</li>
+                        <li><a href="#" class="hover:text-brand-500 flex items-center gap-2"><i class="ph ph-truck text-lg"></i> Shipping Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-100 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-sm text-gray-400">
+                    &copy; 2026 De Great Footwear Collection. All rights reserved.
+                </p>
+                <div class="flex gap-4">
+                    <a href="#" class="text-gray-400 hover:text-gray-900"><i class="ph ph-instagram-logo text-xl"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-gray-900"><i class="ph ph-facebook-logo text-xl"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-gray-900"><i class="ph ph-twitter-logo text-xl"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ============================================ -->
+    <!-- TAWK.TO LIVE CHAT SCRIPT                     -->
+    <!-- Replace YOUR_PROPERTY_ID and YOUR_WIDGET_ID  -->
+    <!-- ============================================ -->
+    <script type="text/javascript">
+    var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+    (function(){
+    var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+    s1.async=true;
+    s1.src='https://embed.tawk.to/YOUR_PROPERTY_ID/YOUR_WIDGET_ID';
+    s1.charset='UTF-8';
+    s1.setAttribute('crossorigin','*');
+    s0.parentNode.insertBefore(s1,s0);
+    })();
+    </script>
+    <!-- ============================================ -->
+
+    <script>
+        // ============ PRODUCTS DATA ============
+        const products = [
+            { id: 1, name: "Premium White Sneaker", price: 45000, category: "Men", image: "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" },
+            { id: 2, name: "Black Chunky Trainer", price: 85000, category: "Unisex", image: "https://images.unsplash.com/photo-1608231387042-66d1773070a5?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" },
+            { id: 3, name: "Elevate High-Top", price: 65000, category: "Men", image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" },
+            { id: 4, name: "Urban Comfort Runner", price: 55000, category: "Women", image: "https://images.unsplash.com/photo-1551107696-a4b0c5a0d9a2?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" },
+            { id: 5, name: "Vintage Leather Boot", price: 120000, category: "Men", image: "https://images.unsplash.com/photo-1520639888713-7851133b1ed0?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" },
+            { id: 6, name: "Aero Glide Pro", price: 72000, category: "Unisex", image: "https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" },
+            { id: 7, name: "Signature Loafer", price: 95000, category: "Men", image: "https://images.unsplash.com/photo-1614252339460-e17635c911ee?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" },
+            { id: 8, name: "Cloud Step Slip-on", price: 35000, category: "Women", image: "https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" }
+        ];
+
+        let cart = [];
+        let currentUser = null;
+        let isCartOpen = false;
+        let isMobileMenuOpen = false;
+
+        // ============ INIT ============
+        document.addEventListener('DOMContentLoaded', () => {
+            loadUserFromSession();
+            renderProducts();
+            updateCartUI();
+            renderUserNav();
+        });
+
+        // ============ AUTH ============
+        function loadUserFromSession() {
+            const sessionUser = sessionStorage.getItem('dg_current_user');
+            if (sessionUser) {
+                currentUser = JSON.parse(sessionUser);
+                const savedCart = localStorage.getItem(`dg_cart_${currentUser.email}`);
+                if (savedCart) cart = JSON.parse(savedCart);
+            } else {
+                const guestCart = localStorage.getItem('dg_cart_guest');
+                if (guestCart) cart = JSON.parse(guestCart);
+            }
+        }
+
+        function saveCart() {
+            const key = currentUser ? `dg_cart_${currentUser.email}` : 'dg_cart_guest';
+            localStorage.setItem(key, JSON.stringify(cart));
+        }
+
+        function handleRegister(event) {
+            event.preventDefault();
+            const name = document.getElementById('register-name').value;
+            const email = document.getElementById('register-email').value;
+            const password = document.getElementById('register-password').value;
+
+            const users = JSON.parse(localStorage.getItem('dg_users') || '[]');
+            if (users.find(u => u.email === email)) {
+                showToast('An account with this email already exists.', 'bg-red-500');
+                return;
+            }
+
+            users.push({ name, email, password });
+            localStorage.setItem('dg_users', JSON.stringify(users));
+
+            currentUser = { name, email };
+            sessionStorage.setItem('dg_current_user', JSON.stringify(currentUser));
+            
+            const guestCart = localStorage.getItem('dg_cart_guest');
+            if (guestCart) {
+                const parsedGuestCart = JSON.parse(guestCart);
+                parsedGuestCart.forEach(guestItem => {
+                    const existing = cart.find(item => item.id === guestItem.id);
+                    if (existing) existing.quantity += guestItem.quantity;
+                    else cart.push(guestItem);
+                });
+                localStorage.removeItem('dg_cart_guest');
+            }
+            saveCart();
+
+            closeAuthModal();
+            renderUserNav();
+            updateCartUI();
+            showToast(`Welcome, ${name}! Your account is ready.`, 'bg-green-500');
+        }
+
+        function handleLogin(event) {
+            event.preventDefault();
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+
+            const users = JSON.parse(localStorage.getItem('dg_users') || '[]');
+            const user = users.find(u => u.email === email && u.password === password);
+
+            if (user) {
+                currentUser = { name: user.name, email: user.email };
+                sessionStorage.setItem('dg_current_user', JSON.stringify(currentUser));
+                
+                const savedCart = localStorage.getItem(`dg_cart_${user.email}`);
+                cart = savedCart ? JSON.parse(savedCart) : [];
+                saveCart();
+
+                closeAuthModal();
+                renderUserNav();
+                updateCartUI();
+                showToast(`Welcome back, ${user.name}!`, 'bg-green-500');
+            } else {
+                showToast('Invalid email or password.', 'bg-red-500');
+            }
+        }
+
+        function handleLogout() {
+            currentUser = null;
+            sessionStorage.removeItem('dg_current_user');
+            cart = [];
+            localStorage.removeItem('dg_cart_guest');
+            renderUserNav();
+            updateCartUI();
+            showToast('You have been logged out.', 'bg-gray-800');
+        }
+
+        function renderUserNav() {
+            const nav = document.getElementById('user-nav');
+            if (currentUser) {
+                nav.innerHTML = `
+                    <div class="flex items-center gap-2 sm:gap-3">
+                        <span class="text-sm font-medium text-gray-700 hidden sm:block">Hi, ${currentUser.name.split(' ')[0]}</span>
+                        <button onclick="handleLogout()" class="text-sm text-red-500 hover:text-red-700 font-medium">Logout</button>
+                    </div>
+                `;
+            } else {
+                nav.innerHTML = `
+                    <button onclick="openAuthModal()" class="text-sm font-medium text-gray-700 hover:text-brand-500 flex items-center gap-1">
+                        <i class="ph ph-user text-xl"></i>
+                        <span class="hidden sm:inline">Login / Register</span>
+                    </button>
+                `;
+            }
+        }
+
+        function openAuthModal() {
+            document.getElementById('auth-modal').classList.remove('hidden');
+        }
+
+        function closeAuthModal() {
+            document.getElementById('auth-modal').classList.add('hidden');
+            document.getElementById('login-form').reset();
+            document.getElementById('register-form').reset();
+            switchAuthTab('login');
+        }
+
+        function switchAuthTab(tab) {
+            const loginForm = document.getElementById('login-form');
+            const registerForm = document.getElementById('register-form');
+            const tabLogin = document.getElementById('tab-login');
+            const tabRegister = document.getElementById('tab-register');
+
+            if (tab === 'login') {
+                loginForm.classList.remove('hidden');
+                registerForm.classList.add('hidden');
+                tabLogin.className = 'flex-1 py-3 text-center font-bold text-brand-500 border-b-2 border-brand-500 transition-all';
+                tabRegister.className = 'flex-1 py-3 text-center font-medium text-gray-500 hover:text-gray-700 transition-all';
+            } else {
+                loginForm.classList.add('hidden');
+                registerForm.classList.remove('hidden');
+                tabRegister.className = 'flex-1 py-3 text-center font-bold text-brand-500 border-b-2 border-brand-500 transition-all';
+                tabLogin.className = 'flex-1 py-3 text-center font-medium text-gray-500 hover:text-gray-700 transition-all';
+            }
+        }
+
+        // ============ PRODUCTS ============
+        function renderProducts() {
+            const grid = document.getElementById('product-grid');
+            grid.innerHTML = '';
+
+            products.forEach(product => {
+                const card = document.createElement('div');
+                card.className = 'group relative flex flex-col bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all-ease border border-gray-100 overflow-hidden';
+                card.innerHTML = `
+                    <div class="relative w-full h-72 bg-gray-100 product-img-container">
+                        <img src="${product.image}" alt="${product.name}" class="w-full h-full object-cover product-img" loading="lazy" onerror="this.src='https://placehold.co/400x400/cccccc/969696?text=Image+Not+Found'">
+                        <div class="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                        <div class="absolute top-4 left-4 bg-white/90 backdrop-blur text-xs font-bold px-2 py-1 rounded text-gray-800">
+                            ${product.category}
+                        </div>
+                    </div>
+                    <div class="p-5 flex flex-col flex-1">
+                        <h3 class="text-lg font-bold text-gray-900 mb-1">${product.name}</h3>
+                        <p class="text-brand-500 font-bold mb-4">₦${product.price.toLocaleString('en-NG')}</p>
+                        
+                        <div class="mt-auto pt-4 border-t border-gray-100">
+                            <button onclick="addToCart(${product.id})" class="w-full bg-brand-900 text-brand-500 py-3 rounded-lg font-medium hover:bg-black transition-colors flex items-center justify-center gap-2 group/btn border border-brand-500">
+                                <i class="ph ph-shopping-cart-simple text-lg group-hover/btn:-translate-y-1 transition-transform"></i> Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // ============ CART ============
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            if (!product) return;
+
+            const existingItem = cart.find(item => item.id === productId);
+            if (existingItem) existingItem.quantity += 1;
+            else cart.push({ ...product, quantity: 1 });
+
+            saveCart();
+            updateCartUI();
+            showToast(`Added ${product.name} to cart!`);
+            
+            const badge = document.getElementById('cart-badge');
+            badge.classList.remove('hidden');
+            badge.classList.add('animate-pulse');
+            setTimeout(() => badge.classList.remove('animate-pulse'), 1000);
+        }
+
+        function removeFromCart(productId) {
+            cart = cart.filter(item => item.id !== productId);
+            saveCart();
+            updateCartUI();
+        }
+
+        function changeQuantity(productId, delta) {
+            const item = cart.find(item => item.id === productId);
+            if (item) {
+                item.quantity += delta;
+                if (item.quantity <= 0) removeFromCart(productId);
+                else { saveCart(); updateCartUI(); }
+            }
+        }
+
+        function updateCartUI() {
+            const container = document.getElementById('cart-items-list');
+            const emptyMsg = document.getElementById('empty-cart-msg');
+            const footer = document.getElementById('cart-footer');
+            const badge = document.getElementById('cart-badge');
+            const totalEl = document.getElementById('cart-total');
+
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            badge.textContent = totalItems;
+            if (totalItems > 0) badge.classList.remove('hidden');
+            else badge.classList.add('hidden');
+
+            if (cart.length === 0) {
+                container.classList.add('hidden');
+                emptyMsg.classList.remove('hidden');
+                footer.classList.add('hidden');
+            } else {
+                emptyMsg.classList.add('hidden');
+                container.classList.remove('hidden');
+                footer.classList.remove('hidden');
+
+                container.innerHTML = '';
+                let totalPrice = 0;
+
+                cart.forEach(item => {
+                    totalPrice += item.price * item.quantity;
+                    const itemEl = document.createElement('div');
+                    itemEl.className = 'flex gap-4 items-center bg-white p-3 rounded-lg border border-gray-100 shadow-sm';
+                    itemEl.innerHTML = `
+                        <img src="${item.image}" alt="${item.name}" class="w-20 h-20 object-cover rounded-md bg-gray-100">
+                        <div class="flex-1">
+                            <h4 class="text-sm font-bold text-gray-900">${item.name}</h4>
+                            <p class="text-sm text-brand-500 font-medium">₦${item.price.toLocaleString('en-NG')}</p>
+                            
+                            <div class="flex items-center gap-3 mt-2">
+                                <div class="flex items-center border border-gray-200 rounded-md">
+                                    <button onclick="changeQuantity(${item.id}, -1)" class="w-7 h-7 flex items-center justify-center text-gray-500 hover:bg-gray-100 transition-colors">-</button>
+                                    <span class="w-8 text-center text-sm font-medium">${item.quantity}</span>
+                                    <button onclick="changeQuantity(${item.id}, 1)" class="w-7 h-7 flex items-center justify-center text-gray-500 hover:bg-gray-100 transition-colors">+</button>
+                                </div>
+                                <button onclick="removeFromCart(${item.id})" class="text-xs text-red-500 hover:underline ml-auto">Remove</button>
+                            </div>
+                        </div>
+                    `;
+                    container.appendChild(itemEl);
+                });
+
+                totalEl.textContent = `₦${totalPrice.toLocaleString('en-NG')}`;
+            }
+        }
+
+        function toggleCart() {
+            isCartOpen = !isCartOpen;
+            const drawer = document.getElementById('cart-drawer');
+            const overlay = document.getElementById('cart-overlay');
+            
+            if (isCartOpen) {
+                drawer.classList.remove('translate-x-full');
+                overlay.classList.remove('hidden');
+                setTimeout(() => {
+                    overlay.classList.remove('opacity-0');
+                    overlay.classList.add('opacity-100');
+                }, 10);
+            } else {
+                drawer.classList.add('translate-x-full');
+                overlay.classList.remove('opacity-100');
+                overlay.classList.add('opacity-0');
+                setTimeout(() => overlay.classList.add('hidden'), 300);
+            }
+        }
+
+        // ============ CHECKOUT (PAYSTACK) ============
+        function checkout() {
+            if (cart.length === 0) {
+                showToast('Your cart is empty.', 'bg-red-500');
+                return;
+            }
+
+            const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            const amountInKobo = totalPrice * 100;
+
+            // ⚠️ REPLACE THIS WITH YOUR REAL PAYSTACK PUBLIC KEY
+            const PAYSTACK_PUBLIC_KEY = 'pk_test_YOUR_PAYSTACK_PUBLIC_KEY'; 
+
+            const handler = PaystackPop.setup({
+                key: PAYSTACK_PUBLIC_KEY,
+                email: currentUser ? currentUser.email : 'guest@example.com',
+                amount: amountInKobo,
+                currency: 'NGN',
+                ref: 'DG_' + Math.floor((Math.random() * 1000000000) + 1),
+                metadata: {
+                    custom_fields: [
+                        {
+                            display_name: "Items",
+                            variable_name: "items",
+                            value: totalItems
+                        }
+                    ]
+                },
+                callback: function(response){
+                    showToast('Payment successful! Ref: ' + response.reference, 'bg-green-500');
+                    cart = [];
+                    saveCart();
+                    updateCartUI();
+                    toggleCart();
+                },
+                onClose: function(){
+                    showToast('Payment window closed.', 'bg-gray-500');
+                }
+            });
+
+            handler.openIframe();
+        }
+
+        // ============ TOAST ============
+        function showToast(message, bgColor = "bg-brand-900") {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = `${bgColor} text-white px-6 py-3 rounded-full shadow-xl font-medium text-sm toast-animate pointer-events-auto flex items-center gap-2`;
+            toast.innerHTML = `<i class="ph ph-check-circle text-lg"></i> ${message}`;
+            
+            container.appendChild(toast);
+
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateY(100%)';
+                toast.style.transition = 'all 0.3s ease';
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        // ============ MOBILE MENU ============
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            isMobileMenuOpen = !isMobileMenuOpen;
+            if (isMobileMenuOpen) menu.classList.remove('hidden');
+            else menu.classList.add('hidden');
+        }
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 10) nav.classList.add('shadow-md');
+            else nav.classList.remove('shadow-md');
+        });
+    </script>
+</body>
+</html>
